@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define the structure for a node in the linked list
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Function to create a new node
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    if (newNode == NULL) {
+        perror("Unable to allocate memory for new node");
+        exit(1);
+    }
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Function to search for a node with a specific value
+struct Node* searchNode(struct Node* head, int valueToFind) {
+    struct Node* current = head;
+
+    while (current != NULL) {
+        if (current->data == valueToFind) {
+            return current; // Node with the value found
+        }
+        current = current->next;
+    }
+
+    return NULL; // Node with the value not found
+}
+
+int main() {
+    // Initialize an empty linked list
+    struct Node* head = NULL;
+
+    // Create and add nodes to the linked list
+    struct Node* node1 = createNode(10);
+    struct Node* node2 = createNode(20);
+    struct Node* node3 = createNode(30);
+
+    // Link the nodes together
+    node1->next = node2;
+    node2->next = node3;
+
+    // Set the head of the linked list
+    head = node1;
+
+    // Search for a node with a specific value
+    int valueToFind = 20;
+    struct Node* result = searchNode(head, valueToFind);
+
+    if (result != NULL) {
+        printf
