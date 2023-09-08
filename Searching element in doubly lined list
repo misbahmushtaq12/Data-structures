@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define the structure for a node in the doubly linked list
+struct Node {
+    int data;
+    struct Node* prev;
+    struct Node* next;
+};
+
+// Function to create a new node
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    if (newNode == NULL) {
+        perror("Unable to allocate memory for new node");
+        exit(1);
+    }
+    newNode->data = data;
+    newNode->prev = NULL;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Function to search for a node with a specific value in a doubly linked list
+struct Node* searchNode(struct Node* head, int valueToFind) {
+    struct Node* current = head;
+
+    while (current != NULL) {
+        if (current->data == valueToFind) {
+            return current; // Node with the value found
+        }
+        current = current->next;
+    }
+
+    return NULL; // Node with the value not found
+}
+
+int main() {
+    // Initialize an empty doubly linked list
+    struct Node* head = NULL;
+
+    // Create and add nodes to the doubly linked list
+    struct
