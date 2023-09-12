@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define a structure for a node in the linked list
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Define a structure for the queue
+struct Queue {
+    struct Node* front;
+    struct Node* rear;
+};
+
+// Function to initialize the queue
+void initialize(struct Queue* queue) {
+    queue->front = NULL;
+    queue->rear = NULL;
+}
+
+// Function to check if the queue is empty
+int isEmpty(struct Queue* queue) {
+    return (queue->front == NULL
