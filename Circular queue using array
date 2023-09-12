@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_SIZE 5  // Define the maximum size of the circular queue
+
+struct CircularQueue {
+    int data[MAX_SIZE];
+    int front, rear;
+};
+
+// Function to initialize the circular queue
+void initialize(struct CircularQueue* queue) {
+    queue->front = -1;
+    queue->rear = -1;
+}
+
+// Function to check if the circular queue is empty
+int isEmpty(struct CircularQueue* queue) {
+    return (queue->front == -1);
+}
+
+// Function to check if the circular queue is full
+int isFull(struct CircularQueue* queue) {
+    return ((queue->rear + 1) % MAX_SIZE == queue->front);
+}
+
+// Function to enqueue an element into the circular queue
+void enqueue(struct CircularQueue* queue, int item) {
+    if (isFull(queue)) {
+        printf("Queue is full. Cannot enqueue %d\n", item);
+        return;
+    }
+    if (isEmpty(queue)) {
+        queue->front = 0;
+    }
+    queue->rear = (queue->rear + 1) % MAX_SIZE;
+    queue->data[queue->rear] = item;
+}
+
+// Function to dequeue an element from the circular queue
+int dequeue(struct CircularQueue* queue) {
+    if (isEmpty(queue)) {
+        printf("Queue is empty. Cannot dequeue.\n");
+        return -1;
+    }
+    int item = queue->data[queue->front];
+    if (queue->front == queue->rear)
