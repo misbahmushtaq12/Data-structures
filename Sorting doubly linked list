@@ -1,0 +1,96 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Structure for a doubly linked list node
+struct Node {
+    int data;
+    struct Node* prev;
+    struct Node* next;
+};
+
+// Function to create a new node
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->prev = NULL;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Function to merge two sorted linked lists
+struct Node* merge(struct Node* left, struct Node* right) {
+    if (left == NULL) return right;
+    if (right == NULL) return left;
+
+    if (left->data < right->data) {
+        left->next = merge(left->next, right);
+        left->next->prev = left;
+        left->prev = NULL;
+        return left;
+    } else {
+        right->next = merge(left, right->next);
+        right->next->prev = right;
+        right->prev = NULL;
+        return right;
+    }
+}
+
+// Function to perform Merge Sort on a doubly linked list
+struct Node* mergeSort(struct Node* head) {
+    if (head == NULL || head->next == NULL) return head;
+
+    // Split the list into two halves
+    struct Node* middle = head;
+    struct Node* fast = head->next;
+    while (fast != NULL) {
+        fast = fast->next;
+        if (fast != NULL) {
+            middle = middle->next;
+            fast = fast->next;
+        }
+    }
+
+    struct Node* left = head;
+    struct Node* right = middle->next;
+    middle->next = NULL;
+
+    left = mergeSort(left);
+    right = mergeSort(right);
+
+    // Merge the sorted halves
+    return merge(left, right);
+}
+
+// Function to display a doubly linked list
+void display(struct Node* head) {
+    struct Node* current = head;
+    while (current != NULL) {
+        printf("%d ", current->data);
+        current = current->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    struct Node* head = createNode(12);
+    head->next = createNode(11);
+    head->next->prev = head;
+    head->next->next = createNode(13);
+    head->next->next->prev = head->next;
+    head->next->next->next = createNode(5);
+    head->next->next->next->prev = head->next->next;
+    head->next->next->next->next = createNode(6);
+    head->next->next->next->next->prev = head->next->next->next;
+    head->next->next->next->next->next = createNode(7);
+    head->next->next->next->next->next->prev = head->next->next->next->next;
+
+    printf("Original doubly linked list: ");
+    display(head);
+
+    head = mergeSort(head);
+
+    printf("Sorted doubly linked list: ");
+    display(head);
+
+    return 0;
+}
