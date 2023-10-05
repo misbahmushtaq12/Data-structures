@@ -1,0 +1,125 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Structure for a node in the circular queue
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Structure for the circular queue
+struct Queue {
+    struct Node* front;
+    struct Node* rear;
+};
+
+// Function to create an empty circular queue
+struct Queue* createQueue() {
+    struct Queue* queue = (struct Queue*)malloc(sizeof(struct Queue));
+    queue->front = NULL;
+    queue->rear = NULL;
+    return queue;
+}
+
+// Function to check if the circular queue is empty
+int isEmpty(struct Queue* queue) {
+    return (queue->front == NULL);
+}
+
+// Function to enqueue an element into the circular queue
+void enqueue(struct Queue* queue, int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+
+    if (isEmpty(queue)) {
+        newNode->next = newNode;
+        queue->front = newNode;
+        queue->rear = newNode;
+    } else {
+        newNode->next = queue->front;
+        queue->rear->next = newNode;
+        queue->rear = newNode;
+    }
+}
+
+// Function to dequeue an element from the circular queue
+int dequeue(struct Queue* queue) {
+    if (isEmpty(queue)) {
+        printf("Queue is empty.\n");
+        return -1;
+    }
+
+    int data;
+    struct Node* temp = queue->front;
+
+    if (queue->front == queue->rear) {
+        data = temp->data;
+        queue->front = NULL;
+        queue->rear = NULL;
+        free(temp);
+    } else {
+        data = temp->data;
+        queue->front = temp->next;
+        queue->rear->next = queue->front;
+        free(temp);
+    }
+
+    return data;
+}
+
+// Function to display the circular queue
+void display(struct Queue* queue) {
+    if (isEmpty(queue)) {
+        printf("Queue is empty.\n");
+        return;
+    }
+
+    struct Node* current = queue->front;
+
+    do {
+        printf("%d -> ", current->data);
+        current = current->next;
+    } while (current != queue->front);
+
+    printf("\n");
+}
+
+int main() {
+    struct Queue* queue = createQueue();
+    int choice, data;
+
+    while (1) {
+        printf("\nCircular Queue Menu:\n");
+        printf("1. Enqueue\n");
+        printf("2. Dequeue\n");
+        printf("3. Display the queue\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter data to enqueue: ");
+                scanf("%d", &data);
+                enqueue(queue, data);
+                break;
+            case 2:
+                data = dequeue(queue);
+                if (data != -1) {
+                    printf("Dequeued element: %d\n", data);
+                }
+                break;
+            case 3:
+                printf("Circular Queue: ");
+                display(queue);
+                break;
+            case 4:
+                exit(0);
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }
+
+    return 0;
+}
+
