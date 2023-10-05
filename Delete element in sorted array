@@ -1,0 +1,58 @@
+#include <stdio.h>
+
+// Function to delete an element from a sorted array
+int deleteElement(int arr[], int size, int element) {
+    int i, j;
+
+    // Find the position of the element to delete
+    for (i = 0; i < size; i++) {
+        if (arr[i] == element) {
+            break;
+        }
+    }
+
+    // If the element is not found, return -1 (not found)
+    if (i == size) {
+        return -1;
+    }
+
+    // Shift elements to the left to fill the gap
+    for (j = i; j < size - 1; j++) {
+        arr[j] = arr[j + 1];
+    }
+
+    // Decrement the size of the array
+    size--;
+
+    return size;
+}
+
+int main() {
+    int arr[100]; // Assuming a maximum array size of 100
+    int size, element;
+
+    printf("Enter the size of the sorted array: ");
+    scanf("%d", &size);
+
+    printf("Enter the sorted array elements: ");
+    for (int i = 0; i < size; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    printf("Enter the element to delete: ");
+    scanf("%d", &element);
+
+    int newSize = deleteElement(arr, size, element);
+
+    if (newSize == -1) {
+        printf("Element not found in the array.\n");
+    } else {
+        printf("Sorted array after deletion: ");
+        for (int i = 0; i < newSize; i++) {
+            printf("%d ", arr[i]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
