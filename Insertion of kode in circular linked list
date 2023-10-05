@@ -1,0 +1,95 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Structure for a node in the circular linked list
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Function to create a new node
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Function to insert a node at the beginning of the circular linked list
+struct Node* insertAtBeginning(struct Node* head, int data) {
+    struct Node* newNode = createNode(data);
+    if (head == NULL) {
+        newNode->next = newNode; // Circular reference for the first node
+        return newNode;
+    }
+
+    struct Node* current = head;
+    while (current->next != head) {
+        current = current->next;
+    }
+
+    newNode->next = head;
+    current->next = newNode;
+    return newNode; // The new node becomes the new head
+}
+
+// Function to insert a node at the end of the circular linked list
+struct Node* insertAtEnd(struct Node* head, int data) {
+    struct Node* newNode = createNode(data);
+    if (head == NULL) {
+        newNode->next = newNode; // Circular reference for the first node
+        return newNode;
+    }
+
+    struct Node* current = head;
+    while (current->next != head) {
+        current = current->next;
+    }
+
+    current->next = newNode;
+    newNode->next = head;
+    return head;
+}
+
+// Function to insert a node after a given node
+void insertAfter(struct Node* prevNode, int data) {
+    if (prevNode == NULL) {
+        printf("The given previous node cannot be NULL.\n");
+        return;
+    }
+
+    struct Node* newNode = createNode(data);
+    newNode->next = prevNode->next;
+    prevNode->next = newNode;
+}
+
+// Function to display the circular linked list
+void display(struct Node* head) {
+    if (head == NULL) {
+        printf("Circular Linked List is empty.\n");
+        return;
+    }
+
+    struct Node* current = head;
+    do {
+        printf("%d -> ", current->data);
+        current = current->next;
+    } while (current != head);
+
+    printf("\n");
+}
+
+int main() {
+    struct Node* head = NULL;
+
+    // Inserting nodes
+    head = insertAtBeginning(head, 5); // Insert at the beginning
+    insertAfter(head, 7);             // Insert after a given node
+    head = insertAtEnd(head, 10);     // Insert at the end
+
+    printf("Circular Linked List: ");
+    display(head);
+
+    return 0;
+}
+
