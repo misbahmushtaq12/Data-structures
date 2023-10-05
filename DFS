@@ -1,0 +1,58 @@
+#include <stdio.h>
+
+#define MAX_NODES 100
+
+int graph[MAX_NODES][MAX_NODES];
+int visited[MAX_NODES];
+int numNodes;
+
+void initialize() {
+    int i, j;
+    for (i = 0; i < MAX_NODES; i++) {
+        visited[i] = 0;
+        for (j = 0; j < MAX_NODES; j++) {
+            graph[i][j] = 0;
+        }
+    }
+}
+
+void addEdge(int from, int to) {
+    graph[from][to] = 1;
+    graph[to][from] = 1; // For undirected graphs
+}
+
+void dfs(int node) {
+    visited[node] = 1;
+    printf("%d ", node);
+
+    for (int i = 0; i < numNodes; i++) {
+        if (graph[node][i] && !visited[i]) {
+            dfs(i);
+        }
+    }
+}
+
+int main() {
+    initialize();
+
+    printf("Enter the number of nodes: ");
+    scanf("%d", &numNodes);
+
+    int from, to;
+    printf("Enter the edges (from to): (-1 -1 to exit)\n");
+
+    while (1) {
+        scanf("%d %d", &from, &to);
+        if (from == -1 || to == -1) break;
+        addEdge(from, to);
+    }
+
+    int startNode;
+    printf("Enter the starting node for DFS: ");
+    scanf("%d", &startNode);
+
+    printf("DFS traversal starting from node %d: ", startNode);
+    dfs(startNode);
+
+    return 0;
+}
