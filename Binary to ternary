@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+int binaryToTernary(int binary) {
+    int ternary = 0;
+    int base = 1;
+
+    while (binary > 0) {
+        int digit = binary % 10;
+        ternary = ternary + digit * base;
+        base *= 2;
+        binary /= 10;
+    }
+
+    return ternary;
+}
+
+int main() {
+    int binaryNumber;
+    printf("Enter a binary number: ");
+    scanf("%d", &binaryNumber);
+
+    int ternaryNumber = binaryToTernary(binaryNumber);
+    printf("Ternary equivalent: %d\n", ternaryNumber);
+
+    return 0;
+}
