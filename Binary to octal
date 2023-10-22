@@ -1,0 +1,34 @@
+#include <stdio.h>
+
+int binaryToOctal(int binary) {
+    int octal = 0;
+    int base = 1;
+
+    while (binary > 0) {
+        int digit = binary % 1000; // Take 3 binary digits at a time
+        int octalDigit = 0;
+
+        // Convert the 3 binary digits to octal
+        while (digit > 0) {
+            octalDigit = octalDigit * 2 + (digit % 10);
+            digit /= 10;
+        }
+
+        octal = octal + octalDigit * base;
+        base *= 10;
+        binary /= 1000; // Move to the next set of 3 binary digits
+    }
+
+    return octal;
+}
+
+int main() {
+    int binaryNumber;
+    printf("Enter a binary number: ");
+    scanf("%d", &binaryNumber);
+
+    int octalNumber = binaryToOctal(binaryNumber);
+    printf("Octal equivalent: %o\n", octalNumber);
+
+    return 0;
+}
