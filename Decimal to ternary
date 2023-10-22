@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+void decimalToTernary(int decimal) {
+    if (decimal == 0) {
+        printf("Ternary equivalent: 0\n");
+        return;
+    }
+
+    int ternary[32]; // Assuming a 32-trit ternary representation
+    int index = 0;
+
+    while (decimal > 0) {
+        ternary[index] = decimal % 3;
+        decimal = decimal / 3;
+        index++;
+    }
+
+    printf("Ternary equivalent: ");
+    for (int i = index - 1; i >= 0; i--) {
+        printf("%d", ternary[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int decimalNumber;
+    printf("Enter a decimal number: ");
+    scanf("%d", &decimalNumber);
+
+    decimalToTernary(decimalNumber);
+
+    return 0;
+}
