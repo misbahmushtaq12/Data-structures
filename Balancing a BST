@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define a structure for a binary tree node.
+struct Node {
+    int data;
+    struct Node* left;
+    struct Node* right;
+};
+
+// Function to create a new node with the given data.
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+}
+
+// Function to perform an in-order traversal and store elements in an array.
+void inOrderTraversal(struct Node* root, int* arr, int* index) {
+    if (root != NULL) {
+        inOrderTraversal(root->left, arr, index);
+        arr[(*index)++] = root->data;
+        inOrderTraversal(root->right, arr, index);
+    }
+}
+
+// Function to build a balanced BST from a sorted array.
+struct Node* sortedArrayToBST(int* arr, int start, int end) {
+    if (start > end) {
+        return NULL;
+    }
+
+    int mid = (start + end) / 2;
+    struct Node* newNode = createNode(arr[mid]);
+
+    newNode->left = sortedArrayToBST(arr, start, mid - 1);
+    newNode->right = sortedArrayToBST(arr, mid + 1, end);
+
+    return newNode;
+}
+
+// Function to display the in-order traversal of a BST.
+void displayInOrder(struct Node* root) {
+    if (root != NULL) {
+        displayInOrder(root->left);
+        printf("%d -> ", root->data);
+        displayInOrder(root->right);
+    }
+}
+
+int main() {
+    int sortedArray[] = {20, 30, 40, 50, 60, 70, 80};
+    int n = sizeof(sortedArray) / sizeof(sortedArray[0]);
+
+    int index = 0;
+    struct Node* root = sortedArrayToBST(sortedArray, 0, n - 1);
+
+    printf("Balanced BST (in-order traversal):\n");
+    displayInOrder(root);
+
+    return 0;
+}
+
