@@ -1,0 +1,17 @@
+#include <stdio.h>
+
+int main() {
+    int arr[10] = {2, 3, 4, 3, 6, 4, 2, 1, 7, 2};
+    int elementToFind = 2;
+    int frequency = 0;
+
+    for (int i = 0; i < 10; i++) {
+        if (arr[i] == elementToFind) {
+            frequency++;
+        }
+    }
+
+    printf("Frequency of %d in the array: %d\n", elementToFind, frequency);
+
+    return 0;
+}
