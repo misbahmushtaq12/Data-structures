@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+int main() {
+    int sourceArray[5] = {1, 2, 3, 4, 5};
+    int destinationArray[5];
+
+    for (int i = 0; i < 5; i++) {
+        destinationArray[i] = sourceArray[i];
+    }
+
+    printf("Source Array: ");
+    for (int i = 0; i < 5; i++) {
+        printf("%d ", sourceArray[i]);
+    }
+    printf("\n");
+
+    printf("Copied Array: ");
+    for (int i = 0; i < 5; i++) {
+        printf("%d ", destinationArray[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
