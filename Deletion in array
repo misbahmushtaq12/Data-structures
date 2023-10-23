@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int myArray[10]; // Declare an integer array of size 10.
+    int n = 5; // Current number of elements in the array.
+    
+    // Initialize the array with some values.
+    myArray[0] = 10;
+    myArray[1] = 20;
+    myArray[2] = 30;
+    myArray[3] = 40;
+    myArray[4] = 50;
+
+    // Display the original array.
+    printf("Original Array:\n");
+    for (int i = 0; i < n; i++) {
+        printf("myArray[%d] = %d\n", i, myArray[i]);
+    }
+    
+    // Delete an element from a specific position (e.g., position 2).
+    int position = 2;
+    
+    if (position < 0 || position >= n) {
+        printf("Invalid position for deletion.\n");
+    } else {
+        // Shift elements to fill the gap left by the deleted element.
+        for (int i = position; i < n - 1; i++) {
+            myArray[i] = myArray[i + 1];
+        }
+        n--; // Decrement the number of elements.
+        
+        // Display the updated array.
+        printf("Array after deletion:\n");
+        for (int i = 0; i < n; i++) {
+            printf("myArray[%d] = %d\n", i, myArray[i]);
+        }
+    }
+
+    return 0;
+}
