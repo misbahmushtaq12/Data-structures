@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int myArray[10]; // Declare an integer array of size 10.
+    int n = 5; // Current number of elements in the array.
+    
+    // Initialize the array with some values.
+    myArray[0] = 10;
+    myArray[1] = 20;
+    myArray[2] = 30;
+    myArray[3] = 40;
+    myArray[4] = 50;
+
+    // Display the original array.
+    printf("Original Array:\n");
+    for (int i = 0; i < n; i++) {
+        printf("myArray[%d] = %d\n", i, myArray[i]);
+    }
+    
+    // Search for an element (e.g., search for element 30).
+    int elementToSearch = 30;
+    int found = 0; // Flag to indicate if the element is found.
+
+    for (int i = 0; i < n; i++) {
+        if (myArray[i] == elementToSearch) {
+            printf("Element %d found at position %d.\n", elementToSearch, i);
+            found = 1;
+            break; // Exit the loop once the element is found.
+        }
+    }
+
+    if (!found) {
+        printf("Element %d not found in the array.\n", elementToSearch);
+    }
+
+    return 0;
+}
